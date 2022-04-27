@@ -9,72 +9,70 @@
         <#if realm.password>
             <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}" method="post">
 
-                    <#if usernameEditDisabled??>
-                        <v-text-field 
-                          label="<#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if>" 
-                          value="${(login.username!'')}"
-                          id="username"
-                          name="username"
-                          tabindex="1"
-                          disabled
-                        >
-                        </v-text-field>
-                    <#else>
-                        <v-text-field
-                          label="<#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if>"
-                          value="${(login.username!'')}"
-                          :rules="[rules.required]"           
-                          prepend-icon="person" 
-                          clear-icon="clear"         
-                          id="username"
-                          name="username"
-                          tabindex="1"
-                          autofocus
-                          autocomplete="off"
-                          clearable
-                        >
-                        </v-text-field>
-                    </#if>
+              <#if usernameEditDisabled??>
+                <v-text-field 
+                  label="<#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if>" 
+                  value="${(login.username!'')}"
+                  id="username"
+                  name="username"
+                  tabindex="1"
+                  disabled
+                >
+                </v-text-field>
+              <#else>
+                <v-text-field
+                  label="<#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if>"
+                  value="${(login.username!'')}"
+                  :rules="[rules.required]"           
+                  prepend-icon="person" 
+                  clear-icon="clear"         
+                  id="username"
+                  name="username"
+                  tabindex="1"
+                  autofocus
+                  autocomplete="off"
+                  clearable
+                >
+                </v-text-field>
+              </#if>
+              <v-text-field
+                :rules="[rules.required]"            
+                :append-icon="showpassword ? 'visibility' : 'visibility_off'"              
+                prepend-icon="lock"
+                :type="showpassword ? 'text' : 'password'"
+                id="password"
+                name="password"
+                autocomplete="off"
+                label="${msg("password")}"
+                @click:append="showpassword = !showpassword"
+                tabindex="2"
+              ></v-text-field>
+              <#if realm.rememberMe && !usernameEditDisabled??>
+                <#if login.rememberMe??>
+                  <v-switch 
+                    label="${msg("rememberMe")}"
+                    tabindex="3" 
+                    id="rememberMe" 
+                    name="rememberMe"
+                    :value="true"
+                  >
+                  </v-switch>
+                <#else>
+                  <v-switch
+                    label="${msg("rememberMe")}"
+                    tabindex="3"
+                    id="rememberMe"
+                    name="rememberMe"
+                    :value="true"
+                  >
+                  </v-switch>
+                </#if>
+              </#if>
+              <#if realm.resetPasswordAllowed>
+                  <a tabindex="5" href="${url.loginResetCredentialsUrl}">${msg("doForgotPassword")}</a>
+              </#if>
 
-                    <v-text-field
-                      :rules="[rules.required]"            
-                      :append-icon="showpassword ? 'visibility' : 'visibility_off'"              
-                      prepend-icon="lock"
-                      :type="showpassword ? 'text' : 'password'"
-                      id="password"
-                      name="password"
-                      autocomplete="off"
-                      label="${msg("password")}"
-                      @click:append="showpassword = !showpassword"
-                      tabindex="2"
-                    ></v-text-field> 
-
-                        <#if realm.rememberMe && !usernameEditDisabled??>
-                                    <#if login.rememberMe??>
-                                        <v-switch 
-                                          label="${msg("rememberMe")}"
-                                          tabindex="3" 
-                                          id="rememberMe" 
-                                          name="rememberMe"
-                                          :value="true"
-                                        >
-                                        </v-switch>
-                                    <#else>
-                                        <v-switch
-                                          label="${msg("rememberMe")}"
-                                          tabindex="3"
-                                          id="rememberMe"
-                                          name="rememberMe"
-                                          :value="true"
-                                        >
-                                        </v-switch>
-                                    </#if>
-                        </#if>
-                        <#if realm.resetPasswordAllowed>
-                            <a tabindex="5" href="${url.loginResetCredentialsUrl}">${msg("doForgotPassword")}</a>
-                        </#if>
-
-	      </v-card-text>
+            </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <input type="hidden" id="id-hidden-input" name="credentialId" <#if auth.selectedCredential?has_content>value="${auth.selectedCredential}"</#if>/>
@@ -90,7 +88,7 @@
                 >
                   ${msg("doLogIn")}
                 </v-btn>
-             </v-card-actions>
+              </v-card-actions>
             </form>
         </#if>
         </div>
